@@ -1,0 +1,27 @@
+#:kivy 2.3.0
+
+# :import BackgroundLabel modules.additional_classes.additional_classes.BackgroundLabel
+
+<Menu>:
+    name: "menu"
+    FitImage:
+        canvas:
+            Color:
+                rgba: 0, 0, 0, .4
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        source: "images/start_menu_bg_2.jpg"
+
+
+    # main content - title label
+    MainStartContent:
+
+<MainStartContent@MDBoxLayout>:
+    id: main_start_content
+    Label:
+        halign: "center"
+        font_size: dp(40)
+        font_name: "fonts/Lora-BoldItalic.ttf"
+        color: "#E26310"
+        text: "TASK \nMANAGER"
