@@ -1,7 +1,66 @@
 #:kivy 2.3.0
 
+
 <Tasks>:
     name: "tasks"
-    MDLabel:
-        halign:"center"
-        text: "Tasks"
+
+    ScrollView:
+        id: scroll
+        pos_hint: {"center_x":0.5, "top":1}
+        size_hint: .9,.8
+        MDList:
+            id: list_container
+
+    MDFloatingActionButton:
+        pos_hint: {"center_x":0.5, "center_y": 0.1}
+        icon: "plus-thick"
+        icon_size: dp(25)
+        md_bg_color: "#8A2BE2"
+        on_release : root.open_dialog()
+
+# <ListItem>:
+#     secondary_font_style: "Overline"
+#     on_size:
+#         self.ids._right_container.width = list_container.width
+#         self.ids._right_container.x = list_container.width
+#     LeftCheckbox:
+#         size_hint: None, None
+#         size: dp(40), dp(40)
+
+#     RightIcons:
+
+<RightIcons>:
+    MDIconButton:
+        pos_hint: {"x":0.8, "center_y":0.5}
+        icon_size: dp(22)
+        icon: "notebook-edit"
+
+    MDIconButton:
+        pos_hint: {"x":0.9, "center_y":0.5}
+        icon_size: dp(22)
+        icon: "trash-can"
+
+<DialogContent>:
+    orientation: "vertical"
+    size_hint_y: None
+    height: "150dp"
+    spacing: dp(10)
+
+    MDTextField:
+        id: task_name_field
+        hint_text: "enter a task name"
+        on_text_validate: app.root.ids.sm.get_screen("tasks").add_task()
+
+
+    MDGridLayout:
+        cols:2
+        MDLabel:
+            text: f"Start: {root.start_time}"
+        MDLabel:
+            text: f"Finish: {root.finish_time}"
+        MDIconButton:
+            icon: "clock-time-two"
+            on_release: root.show_time_picker(root.start_time)
+        MDIconButton:
+            icon: "clock-time-two"
+            on_release: root.show_time_picker(root.finish_time)

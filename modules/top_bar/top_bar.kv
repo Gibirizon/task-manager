@@ -1,43 +1,39 @@
 #:kivy 2.3.0
 
 <Navigation>:
-    orientation: 'vertical'
+    font_size: dp(10)
+
+    # orientation: 'vertical'
 
     TopBar:
-        size_hint: 1, 1
+        id: top_bar
 
     NavigationBar:
+        id: navigation_bar
         width: root.width
+    # Label:
+    #     size_hint_y: None
+    #     height: dp(0.1)
 
 # top app bar to show active tab name and implement some information about the app
 <TopBar@MDTopAppBar>:
-    id: top_app_bar
-    type: "small"
-    theme_bg_color: "Custom"
+    pos_hint: {"x":0, "y": .4}
+    size_hint: 1, .6
+    type_height: "small"
+
     md_bg_color: "#1F2022"
+    title: "Main Menu"
+    left_action_items: [["arrow-left"]]
+    right_action_items:[["information"]]
 
-    MDTopAppBarLeadingButtonContainer:
-
-        MDActionTopAppBarButton:
-            icon: "menu"
-
-    MDTopAppBarTitle:
-        text: "Welcome to App"
-        pos_hint: {"center_x": .5}
-        color: 1,1,1,1
-
-    MDTopAppBarTrailingButtonContainer:
-
-        MDActionTopAppBarButton:
-            icon: "account-circle-outline"
 
 
 # scrollabale vertical navigation to display and manage different tabs
 <NavigationBar@ScrollView>:
-    id: navigation_bar
+    pos_hint: {"x":0, "y":0}
+    size_hint: None, .4
     do_scroll_x: True
     do_scroll_y: False
-    size_hint: None, .6
     GridLayout:
         rows: 1
         # spacing: 10
@@ -45,25 +41,25 @@
         width: self.minimum_width
         NavigationButton:
             text: "Daily Tasks"
-            on_press: app.root.ids.sm.change_screen("tasks")
+            on_press: app.root.nav_button_click("tasks", self.text)
         NavigationButton:
             text: "Daily Goals"
-            on_press: app.root.ids.sm.change_screen("goals")
+            on_press: app.root.nav_button_click("goals", self.text)
         NavigationButton:
             text: "Timer"
-            on_press: app.root.ids.sm.change_screen("timer")
+            on_press: app.root.nav_button_click("timer", self.text)
         NavigationButton:
             text: "Weekly Tasks"
-            on_press: app.root.ids.sm.change_screen("weekly_tasks")
+            on_press: app.root.nav_button_click("weekly_tasks", self.text)
         NavigationButton:
             text: "Notes"
-            on_press: app.root.ids.sm.change_screen("notes")
+            on_press: app.root.nav_button_click("notes", self.text)
         NavigationButton:
             text: "Statistics"
-            on_press: app.root.ids.sm.change_screen("stats")
+            on_press: app.root.nav_button_click("stats", self.text)
         NavigationButton:
             text: "Calendar"
-            on_press: app.root.ids.sm.change_screen("calendar")
+            on_press: app.root.nav_button_click("calendar", self.text)
 
 <NavigationButton@Button>:
     background_normal: ""

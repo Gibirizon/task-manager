@@ -14,18 +14,18 @@
 MainScreen:
 
 <MainScreen>:
-    id: main_screen
     RelativeLayout:
         id: main_layout
         Navigation:
-            pos_hint: {"x":0, "y":0.87}
+            id: nav
+            pos_hint: {"x":0, "y":0.86}
             size_hint: 1, 0.15
 
         # Main Screen Manager for my mobile app
         MainScreenManager:
             id: sm
             pos_hint: {"x":0, "y":0}
-            size_hint: 1, 0.87
+            size_hint: 1, 0.86
             Menu:
             Tasks:
             Goals:
