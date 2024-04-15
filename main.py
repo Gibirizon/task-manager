@@ -20,12 +20,57 @@ Builder.load_file("./modules/weekly_tasks/weekly_tasks.kv")
 
 
 class MainScreenManager(ScreenManager):
+    touch_down_x = 0
+    previous_screen = ""
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
     # after click on nav button changing screen
     def change_screen(self, screen_name):
+        # test is next screen on left or right on navigation bar compared to current screen
+        current_screen_index = self.screen_names.index(self.current_screen.name)
+        next_screen_index = self.screen_names.index(screen_name)
+        if next_screen_index < current_screen_index:
+            self.transition.direction = "right"
+        else:
+            self.transition.direction = "left"
+        # save previous (current) screen to be able to go back to it
+        self.previous_screen = self.current_screen.name
+        # change current screen with proper direction
         self.current = screen_name
+
+    def on_touch_down(self, touch):
+        if self.collide_point(*touch.pos):
+            touch.grab(self)
+            self.touch_down_x = touch.x
+        return super().on_touch_down(touch)
+
+    def on_touch_up(self, touch):
+        if touch.grab_current is self:
+            # that's the correct touch
+            touch.ungrab(self)
+            if self.touch_down_x - touch.x > 0.05 * self.width:
+                next_screen_index = (
+                    self.screen_names.index(self.current_screen.name) + 1
+                )
+                if next_screen_index >= len(self.screen_names):
+                    next_screen_index = 0
+                self.transition.direction = "left"
+            elif touch.x - self.touch_down_x > 0.05 * self.width:
+                next_screen_index = (
+                    self.screen_names.index(self.current_screen.name) - 1
+                )
+                self.transition.direction = "right"
+            else:
+                return super().on_touch_up(touch)
+            self.previous_screen = self.current_screen.name
+            self.current = self.screen_names[next_screen_index]
+
+        return super().on_touch_up(touch)
+
+    def go_back_to_previous_screen(self, *args):
+        self.current = self.previous_screen
 
 
 class MainScreen(Screen):
