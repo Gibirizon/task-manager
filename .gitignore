@@ -1,1 +1,6 @@
+<<<<<<< HEAD
 **/__pycache__
+=======
+pycache/*
+*/pycache/*
+>>>>>>> b204e1b (fix swiping bug, add gitignore)
