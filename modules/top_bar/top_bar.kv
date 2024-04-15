@@ -22,7 +22,7 @@
     type_height: "small"
 
     md_bg_color: "#1F2022"
-    title: "Main Menu"
+    title: "Menu"
     left_action_items: [["arrow-left"]]
     right_action_items:[["information"]]
 
@@ -39,6 +39,9 @@
         # spacing: 10
         size_hint_x: None
         width: self.minimum_width
+        NavigationButton:
+            text: "Menu"
+            on_press: app.root.nav_button_click("menu", self.text)
         NavigationButton:
             text: "Daily Tasks"
             on_press: app.root.nav_button_click("tasks", self.text)

@@ -20,12 +20,41 @@ Builder.load_file("./modules/weekly_tasks/weekly_tasks.kv")
 
 
 class MainScreenManager(ScreenManager):
+    touch_down_x = 0
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
     # after click on nav button changing screen
     def change_screen(self, screen_name):
-        self.current = screen_name
+            # test is next screen on left or right on navigation bar compared to current screen
+            current_screen_index = self.screen_names.index(self.current_screen.name)
+            next_screen_index = self.screen_names.index(screen_name)
+            if next_screen_index < current_screen_index:
+                self.transition.direction = "right"
+            else:
+                self.transition.direction = "left"
+            # change current screen with proper direction
+            self.current = screen_name
+
+    def on_touch_down(self, touch):
+        self.touch_down_x = touch.x
+        print(self.touch_down_x)
+        return super().on_touch_down(touch)
+
+    def on_touch_up(self, touch):
+        if self.touch_down_x - touch.x > 0.05 * self.width:
+           next_screen_index = self.screen_names.index(self.current_screen.name) + 1
+           if next_screen_index >= len(self.screen_names):
+               next_screen_index = 0
+           self.transition.direction = "left"
+        elif touch.x - self.touch_down_x > 0.05 * self.width:
+           next_screen_index = self.screen_names.index(self.current_screen.name) - 1
+           self.transition.direction = "right"
+        else:
+            return super().on_touch_up(touch)
+        self.current = self.screen_names[next_screen_index]
+        return super().on_touch_up(touch)
+
 
 
 class MainScreen(Screen):
