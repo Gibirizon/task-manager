@@ -4,19 +4,10 @@ from kivy.config import Config
 Config.set("graphics", "width", "540")
 Config.set("graphics", "height", "1000")
 
+from database.database import Database
 from kivy.lang.builder import Builder
 from kivy.uix.screenmanager import Screen, ScreenManager
 from kivymd.app import MDApp
-
-Builder.load_file("./modules/menu/menu.kv")
-Builder.load_file("./modules/top_bar/top_bar.kv")
-Builder.load_file("./modules/tasks/tasks.kv")
-Builder.load_file("./modules/goals/goals.kv")
-Builder.load_file("./modules/calendar/calendar.kv")
-Builder.load_file("./modules/notes/notes.kv")
-Builder.load_file("./modules/stats/stats.kv")
-Builder.load_file("./modules/timer/timer.kv")
-Builder.load_file("./modules/weekly_tasks/weekly_tasks.kv")
 
 
 class MainScreenManager(ScreenManager):
@@ -40,24 +31,26 @@ class MainScreenManager(ScreenManager):
         # change current screen with proper direction
         self.current = screen_name
 
+    # creating swiping animation to also change screen
     def on_touch_down(self, touch):
         if self.collide_point(*touch.pos):
             touch.grab(self)
             self.touch_down_x = touch.x
         return super().on_touch_down(touch)
 
+    # swiping animation - switching screens
     def on_touch_up(self, touch):
         if touch.grab_current is self:
             # that's the correct touch
             touch.ungrab(self)
-            if self.touch_down_x - touch.x > 0.05 * self.width:
+            if self.touch_down_x - touch.x > 0.1 * self.width:
                 next_screen_index = (
                     self.screen_names.index(self.current_screen.name) + 1
                 )
                 if next_screen_index >= len(self.screen_names):
                     next_screen_index = 0
                 self.transition.direction = "left"
-            elif touch.x - self.touch_down_x > 0.05 * self.width:
+            elif touch.x - self.touch_down_x > 0.1 * self.width:
                 next_screen_index = (
                     self.screen_names.index(self.current_screen.name) - 1
                 )
@@ -74,6 +67,8 @@ class MainScreenManager(ScreenManager):
 
 
 class MainScreen(Screen):
+    db = Database()
+
     def __init__(self, **kw):
         super().__init__(**kw)
 
@@ -88,6 +83,21 @@ class MainScreen(Screen):
 class TaskManager(MDApp):
     def build(self):
         self.theme_cls.theme_style = "Dark"
+        Builder.load_file("./modules/menu/menu.kv")
+        Builder.load_file("./modules/top_bar/top_bar.kv")
+        Builder.load_file("./modules/goals/goals.kv")
+        Builder.load_file("./modules/calendar/calendar.kv")
+        Builder.load_file("./modules/notes/notes.kv")
+        Builder.load_file("./modules/stats/stats.kv")
+        Builder.load_file("./modules/timer/timer.kv")
+        Builder.load_file("./modules/weekly_tasks/weekly_tasks.kv")
+        Builder.load_file("./modules/tasks/tasks.kv")
+        return MainScreen()
+
+    def on_stop(self):
+        # close connection to db
+        self.root.db.close_connection()
+        return super().on_stop()
 
 
 if __name__ == "__main__":

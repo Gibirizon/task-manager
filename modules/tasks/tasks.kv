@@ -7,7 +7,7 @@
     ScrollView:
         id: scroll
         pos_hint: {"center_x":0.5, "top":1}
-        size_hint: .9,.8
+        size_hint: .9,.75
         MDList:
             id: list_container
 
@@ -29,16 +29,18 @@
 
 #     RightIcons:
 
-<RightIcons>:
-    MDIconButton:
-        pos_hint: {"x":0.8, "center_y":0.5}
-        icon_size: dp(22)
-        icon: "notebook-edit"
+<ListItem>:
+    markup: True
 
-    MDIconButton:
-        pos_hint: {"x":0.9, "center_y":0.5}
-        icon_size: dp(22)
-        icon: "trash-can"
+
+<LeftCheckbox>:
+    id: left_checkbox
+    on_release: root.parent.parent.mark_task(self.active)
+
+<DropdownMenuItem>:
+
+    IconLeftWidget:
+        icon: "git"
 
 <DialogContent>:
     orientation: "vertical"
@@ -49,7 +51,8 @@
     MDTextField:
         id: task_name_field
         hint_text: "enter a task name"
-        on_text_validate: app.root.ids.sm.get_screen("tasks").add_task()
+        on_focus: if self.focus: root.menu.open()
+        # on_text_validate: app.root.ids.sm.get_screen("tasks").add_task()
 
 
     MDGridLayout:
@@ -59,8 +62,10 @@
         MDLabel:
             text: f"Finish: {root.finish_time}"
         MDIconButton:
+            icon_name: "start_time_icon"
             icon: "clock-time-two"
-            on_release: root.show_time_picker(root.start_time)
+            on_release: root.show_time_picker(self.icon_name, root.start_time)
         MDIconButton:
+            icon_name: "finish_time_icon"
             icon: "clock-time-two"
-            on_release: root.show_time_picker(root.finish_time)
+            on_release: root.show_time_picker(self.icon_name, root.finish_time)

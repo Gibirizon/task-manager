@@ -10,27 +10,25 @@
 #:import Timer modules.timer.timer.Timer
 #:import WeeklyTasks modules.weekly_tasks.weekly_tasks.WeeklyTasks
 
-# Screen Manager for my app
+# Screen for my app
 MainScreen:
 
 <MainScreen>:
-    RelativeLayout:
-        id: main_layout
-        Navigation:
-            id: nav
-            pos_hint: {"x":0, "y":0.86}
-            size_hint: 1, 0.15
+    Navigation:
+        id: nav
+        pos_hint: {"x":0, "y":0.86}
+        size_hint: 1, 0.15
 
-        # Main Screen Manager for my mobile app
-        MainScreenManager:
-            id: sm
-            pos_hint: {"x":0, "y":0}
-            size_hint: 1, 0.86
-            Menu:
-            Tasks:
-            Goals:
-            Timer:
-            WeeklyTasks:
-            Notes:
-            Stats:
-            Calendar:
+    # Main Screen Manager for my mobile app
+    MainScreenManager:
+        id: sm
+        pos_hint: {"x":0, "y":0}
+        size_hint: 1, 0.86
+        Menu:
+        Tasks:
+        Goals:
+        Timer:
+        WeeklyTasks:
+        Notes:
+        Stats:
+        Calendar:
