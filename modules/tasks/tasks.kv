@@ -11,61 +11,54 @@
         MDList:
             id: list_container
 
-    MDFloatingActionButton:
+    MDIconButton:
         pos_hint: {"center_x":0.5, "center_y": 0.1}
         icon: "plus-thick"
-        icon_size: dp(25)
-        md_bg_color: "#8A2BE2"
+        style: "filled"
         on_release : root.open_dialog()
 
-# <ListItem>:
-#     secondary_font_style: "Overline"
-#     on_size:
-#         self.ids._right_container.width = list_container.width
-#         self.ids._right_container.x = list_container.width
-#     LeftCheckbox:
-#         size_hint: None, None
-#         size: dp(40), dp(40)
+<EditTaskField>:
+    id: edit_task_field
+    on_text_validate: self.list_item.change_task_name(self.text)
+    focus: True
+    MDTextFieldHintText:
+        text: "Enter new task name"
 
-#     RightIcons:
 
 <ListItem>:
-    markup: True
-
-
-<LeftCheckbox>:
-    id: left_checkbox
-    on_release: root.parent.parent.mark_task(self.active)
-
-<DropdownMenuItem>:
-
-    IconLeftWidget:
-        icon: "git"
+    MDListItemHeadlineText:
+        id: list_headline_text
+        text: root.headline_text
+    MDListItemSupportingText:
+        text: root.supporting_text
+    MDListItemTrailingCheckbox:
+        id: list_checkbox
+        active: root.check
+        on_release: root.mark_task(self.active)
 
 <DialogContent>:
     orientation: "vertical"
-    size_hint_y: None
-    height: "150dp"
-    spacing: dp(10)
-
+    MDDivider:
     MDTextField:
         id: task_name_field
-        hint_text: "enter a task name"
-        on_focus: if self.focus: root.menu.open()
-        # on_text_validate: app.root.ids.sm.get_screen("tasks").add_task()
-
-
-    MDGridLayout:
-        cols:2
-        MDLabel:
-            text: f"Start: {root.start_time}"
-        MDLabel:
-            text: f"Finish: {root.finish_time}"
-        MDIconButton:
-            icon_name: "start_time_icon"
-            icon: "clock-time-two"
-            on_release: root.show_time_picker(self.icon_name, root.start_time)
-        MDIconButton:
-            icon_name: "finish_time_icon"
-            icon: "clock-time-two"
-            on_release: root.show_time_picker(self.icon_name, root.finish_time)
+        mode: "filled"
+        on_focus: if self.focus: root.task_options.open()
+        MDTextFieldHintText:
+            text: "Enter task name"
+    MDListItem:
+        theme_bg_color: "Custom"
+        md_bg_color: app.theme_cls.transparentColor
+        on_release: root.show_time_picker("Start", root.start_time)
+        MDListItemLeadingIcon:
+            icon: "clock"
+        MDListItemSupportingText:
+            text: f"Start time for tasks: {root.start_time}"
+    MDListItem:
+        theme_bg_color: "Custom"
+        md_bg_color: app.theme_cls.transparentColor
+        on_release: root.show_time_picker("Finish", root.finish_time)
+        MDListItemLeadingIcon:
+            icon: "clock"
+        MDListItemSupportingText:
+            text: f"Finish time for tasks: {root.finish_time}"
+    MDDivider:

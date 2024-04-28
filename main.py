@@ -12,13 +12,23 @@ from kivymd.app import MDApp
 
 class MainScreenManager(ScreenManager):
     touch_down_x = 0
-    previous_screen = ""
+    previous_screen = []
+    screen_names_to_titles = {
+        "menu": "Menu",
+        "tasks": "Daily Tasks",
+        "goals": "Daily Goals",
+        "timer": "Timer",
+        "weekly_tasks": "Weekly Tasks",
+        "notes": "Notes",
+        "stats": "Statistics",
+        "calendar": "Calendar",
+    }
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
     # after click on nav button changing screen
-    def change_screen(self, screen_name):
+    def change_screen(self, screen_name, save_previous=True):
         # test is next screen on left or right on navigation bar compared to current screen
         current_screen_index = self.screen_names.index(self.current_screen.name)
         next_screen_index = self.screen_names.index(screen_name)
@@ -26,8 +36,10 @@ class MainScreenManager(ScreenManager):
             self.transition.direction = "right"
         else:
             self.transition.direction = "left"
+
         # save previous (current) screen to be able to go back to it
-        self.previous_screen = self.current_screen.name
+        if self.current_screen.name != screen_name and save_previous:
+            self.previous_screen.append(self.current_screen.name)
         # change current screen with proper direction
         self.current = screen_name
 
@@ -57,13 +69,27 @@ class MainScreenManager(ScreenManager):
                 self.transition.direction = "right"
             else:
                 return super().on_touch_up(touch)
-            self.previous_screen = self.current_screen.name
+
+            # add current screen to previous screen list
+            self.previous_screen.append(self.current_screen.name)
+
+            # change to new screen
             self.current = self.screen_names[next_screen_index]
+
+            # adjust top bar title to the current displayed screen
+            self.parent.ids.nav.adjust_top_bar_title(
+                self.screen_names_to_titles[self.screen_names[next_screen_index]]
+            )
 
         return super().on_touch_up(touch)
 
     def go_back_to_previous_screen(self, *args):
-        self.current = self.previous_screen
+        print(self.previous_screen)
+        if self.previous_screen:
+            self.change_screen(self.previous_screen[-1], False)
+            self.parent.ids.nav.adjust_top_bar_title(
+                self.screen_names_to_titles[self.previous_screen.pop()]
+            )
 
 
 class MainScreen(Screen):

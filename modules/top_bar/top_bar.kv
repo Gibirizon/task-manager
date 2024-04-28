@@ -2,29 +2,34 @@
 
 <Navigation>:
     font_size: dp(10)
-
-    # orientation: 'vertical'
-
     TopBar:
         id: top_bar
 
     NavigationBar:
         id: navigation_bar
         width: root.width
-    # Label:
-    #     size_hint_y: None
-    #     height: dp(0.1)
 
 # top app bar to show active tab name and implement some information about the app
-<TopBar@MDTopAppBar>:
+<TopBar>:
     pos_hint: {"x":0, "y": .4}
     size_hint: 1, .6
-    type_height: "small"
+    type: "small"
 
-    md_bg_color: "#1F2022"
-    title: "Menu"
-    left_action_items: [["arrow-left", lambda x: app.root.ids.sm.go_back_to_previous_screen()]]
-    right_action_items:[["information"]]
+    MDTopAppBarLeadingButtonContainer:
+        spacing: dp(25)
+        MDActionTopAppBarButton:
+            icon: "arrow-left"
+            on_release: app.root.ids.sm.go_back_to_previous_screen()
+
+        MDActionTopAppBarButton:
+            icon: "information"
+
+    MDTopAppBarTitle:
+        id: top_bar_title
+        text: "Menu"
+        pos_hint: {"center_x": 0.5}
+
+
 
 
 
@@ -69,7 +74,5 @@
     background_color: "#14141c"
     min_state_time: 0.2
     font_size: dp(13)
-    markup: True
-    style: "text"
     size_hint_x: None
     width: dp(100)
