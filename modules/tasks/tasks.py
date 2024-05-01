@@ -22,37 +22,97 @@ from kivymd.uix.label import MDLabel
 from kivymd.uix.list import MDListItem, MDListItemLeadingIcon, MDListItemSupportingText
 from kivymd.uix.menu import MDDropdownMenu
 from kivymd.uix.pickers import MDTimePickerDialVertical
+from kivymd.uix.relativelayout import MDRelativeLayout
 from kivymd.uix.selectioncontrol import MDCheckbox
 from kivymd.uix.textfield import MDTextField, MDTextFieldHintText
 
 app = MDApp.get_running_app()
 
 
+class TaskOptionsListItem(MDRelativeLayout):
+    headline_text = StringProperty()
+    dialog = ObjectProperty()
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
 class DialogContent(MDDialogContentContainer):
     time_picker = None
     start_time = StringProperty("17:00")
     finish_time = StringProperty("18:00")
+    task_options = None
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        print([i for i in app.root.db.get_all_tasks_options()])
-        options_items = [
+
+    def set_options(self):
+        self.options_items = [
             {
-                "text": option[0],
-                "on_release": lambda x=option[0]: self.choose_task_name(x),
+                "viewclass": "TaskOptionsListItem",
+                "height": dp(45),
+                "headline_text": option,
+                "dialog": self,
             }
-            for option in app.root.db.get_all_tasks_options()
+            for option in self.searched_options
         ]
-        self.task_options = MDDropdownMenu(
-            caller=self.ids.task_name_field,
-            width=dp(240),
-            position="bottom",
-            max_height=dp(300),
-            items=options_items,
+        self.options_items.insert(
+            0,
+            {
+                "text": "Add new task option",
+                "height": dp(45),
+                "trailing_icon": "plus",
+                "on_release": lambda: self.add_task_to_options(
+                    self.ids.task_name_field.text
+                ),
+            },
         )
 
-    def choose_task_name(self, text):
-        self.ids.task_name_field.text = text
+    def task_options_dropdown_menu_open(self):
+        self.set_options()
+        if not self.task_options:
+            self.task_options = MDDropdownMenu(
+                caller=self.ids.task_name_field,
+                width=dp(240),
+                position="bottom",
+                max_height=dp(315),
+                items=self.options_items,
+            )
+            self.task_options.bind(on_dismiss=self.close_options)
+            self.task_options.open()
+
+    def close_options(self, instance):
+        print(instance)
+        self.task_options = None
+
+    def choose_task_name(self, name):
+        self.ids.task_name_field.text = name
+        self.ids.task_name_field.focus = True
+
+    def add_task_to_options(self, name):
+        app.root.db.create_task_option(name)
+        # self.task_options.dismiss()
+        self.on_text_field_text()
+        self.ids.task_name_field.focus = True
+
+    def delete_task_from_options(self, task):
+        app.root.db.delete_task_option(task)
+        self.on_text_field_text()
+        self.ids.task_name_field.focus = True
+
+    # method for searching system in task options
+    def on_text_field_text(self):
+        all_options = app.root.db.get_all_tasks_options()
+        self.searched_options = []
+        for task_tuple in all_options:
+            if task_tuple[0].startswith(self.ids.task_name_field.text):
+                self.searched_options.append(task_tuple[0])
+        if self.task_options:
+            self.set_options()
+            self.task_options.items = self.options_items
+            pos = self.task_options.get_target_pos()
+            self.task_options.height = dp(315)
+            self.task_options.set_menu_pos(pos)
 
     def show_time_picker(self, item_name, time_variable):
         # Define default time and which of list item is it
@@ -110,6 +170,7 @@ class Dialog(MDDialog):
                 spacing="8dp",
             ),
             size_hint_x=0.8,
+            pos_hint={"center_x": 0.5, "center_y": 0.7},
         )
 
 
@@ -157,7 +218,6 @@ class ListItem(MDListItem):
 
     # marking task as finished/unfinished after clicking on checkbox
     def mark_task(self, active_state):
-        print(active_state)
         task_text = app.root.db.set_completed(self.item_id, int(active_state))
         if active_state == 1:
             self.ids.list_headline_text.text = f"[s]{task_text}[/s]"
@@ -171,13 +231,13 @@ class ListItem(MDListItem):
             caller=self,
             # position="bottom",
             items=[
-                {"size_hint_y": None, "height": dp(10)},
+                {"height": dp(15)},
                 {
                     "viewclass": "EditTaskField",
                     "list_item": self,
                     "text": self.ids.list_headline_text.text,
                 },
-                {"size_hint_y": None, "height": dp(10)},
+                {"height": dp(15)},
             ],
         )
         self.dropdown_options.dismiss()
@@ -231,7 +291,6 @@ class Tasks(Screen):
     # adding new task to the list after pressing "OK" in Dialog Window
     def add_task(self, *args):
         # adding task to database
-        print(self.dialog.content.ids.task_name_field.text)
         new_task = app.root.db.create_task(
             (
                 self.dialog.content.ids.task_name_field.text,

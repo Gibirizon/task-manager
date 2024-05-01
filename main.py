@@ -48,6 +48,7 @@ class MainScreenManager(ScreenManager):
         if self.collide_point(*touch.pos):
             touch.grab(self)
             self.touch_down_x = touch.x
+            self.touch_down_y = touch.y
         return super().on_touch_down(touch)
 
     # swiping animation - switching screens
@@ -55,14 +56,16 @@ class MainScreenManager(ScreenManager):
         if touch.grab_current is self:
             # that's the correct touch
             touch.ungrab(self)
-            if self.touch_down_x - touch.x > 0.1 * self.width:
+            swipe_width = self.touch_down_x - touch.x
+            swipe_height = abs(self.touch_down_y - touch.y)
+            if swipe_width > 0.1 * self.width and abs(swipe_width) > swipe_height:
                 next_screen_index = (
                     self.screen_names.index(self.current_screen.name) + 1
                 )
                 if next_screen_index >= len(self.screen_names):
                     next_screen_index = 0
                 self.transition.direction = "left"
-            elif touch.x - self.touch_down_x > 0.1 * self.width:
+            elif -swipe_width > 0.1 * self.width and abs(swipe_width) > swipe_height:
                 next_screen_index = (
                     self.screen_names.index(self.current_screen.name) - 1
                 )

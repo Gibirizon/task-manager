@@ -26,10 +26,7 @@ class Database:
         self.cur = self.con.cursor()
         self.create_tasks_table()
         self.create_tasks_options_table()
-        if not os.path.isfile(f"{path}/first_initialisation.txt"):
-            with open(f"{path}/first_initialisation.txt", "w"):
-                pass
-            self.create_default_task_options(task=[("maths",), ("polish",)])
+        self.create_default_task_options(task=[("maths",), ("polish",)])
 
     # close connection to database
     def close_connection(self):

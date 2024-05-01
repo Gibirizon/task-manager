@@ -1,3 +1,6 @@
+from sqlite3 import IntegrityError
+
+
 # create table for daily tasks
 def create_tasks_options_table(self):
     self.cur.execute(
@@ -8,32 +11,32 @@ def create_tasks_options_table(self):
 
 # add default task options to table
 def create_default_task_options(self, task):
-    self.cur.executemany(
-        "INSERT INTO tasks_options(task) VALUES(?)",
-        task,
-    )
-    self.con.commit()
+    try:
+        self.cur.executemany(
+            "INSERT INTO tasks_options(task) VALUES(?)",
+            task,
+        )
+        self.con.commit()
+    except IntegrityError as err:
+        print(f"An Error! {err}")
 
 
 # add task option to table
 def create_task_option(self, task):
     # checking if this option already exists
-    existing_task = self.cur.execute(
-        "SELECT task FROM tasks_options WHERE task=?", (task,)
-    )
-    if not existing_task.fetchone():
+    try:
         self.cur.execute("INSERT INTO tasks_options(task) VALUES(?)", (task,))
         self.con.commit()
+    except IntegrityError as err:
+        print(f"An Error! {err}")
 
 
 # deleting task function (after press on trash bin)
-def delete_task_option(self, id):
-    self.cur.execute("DELETE FROM tasks_options WHERE id=?", (id,))
+def delete_task_option(self, task):
+    self.cur.execute("DELETE FROM tasks_options WHERE task=?", (task,))
     self.con.commit()
 
 
 # get all the tasks_options when launching app
 def get_all_tasks_options(self):
-    return self.cur.execute(
-        "SELECT task FROM tasks_options ORDER BY task"
-    ).fetchall()
+    return self.cur.execute("SELECT task FROM tasks_options ORDER BY task").fetchall()
