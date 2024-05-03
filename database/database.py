@@ -3,30 +3,44 @@ import sqlite3
 
 
 class Database:
-    from database.tasks_options_table import (
-        create_default_task_options,
-        create_task_option,
-        create_tasks_options_table,
-        delete_task_option,
-        get_all_tasks_options,
+    from database.options_table import (
+        create_default_options,
+        create_option,
+        create_options_table,
+        delete_option,
+        get_all_options,
     )
-    from database.tasks_table import (
+    from database.tasks_table import (  
         create_task,
         create_tasks_table,
-        delete_task,
         get_all_tasks,
-        set_completed,
-        update_task_name,
+    )
+    from database.to_do_list_base import (
+        create_item,
+        create_to_do_list_table,
+        delete_item,
+        get_all_items,
+        set_item_completed,
+        update_item_name,
     )
 
     def __init__(self):
-        # print(os.path.dirname(__file__))
         path = os.path.dirname(__file__)
         self.con = sqlite3.connect(f"{path}/database.db")
         self.cur = self.con.cursor()
         self.create_tasks_table()
-        self.create_tasks_options_table()
-        self.create_default_task_options(task=[("maths",), ("polish",)])
+        self.create_to_do_list_table("goals")
+        self.create_to_do_list_table("weekly_tasks")
+        self.create_options_table("tasks_options")
+        self.create_options_table("goals_options")
+        self.create_options_table("weekly_tasks_options")
+        self.create_default_options("tasks_options", item=[("maths",), ("polish",)])
+        self.create_default_options(
+            "goals_options", item=[("Speak english",), ("Focus",)]
+        )
+        self.create_default_options(
+            "weekly_tasks_options", item=[("Maths Test",), ("Python mobile app",)]
+        )
 
     # close connection to database
     def close_connection(self):

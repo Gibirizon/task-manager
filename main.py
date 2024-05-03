@@ -112,6 +112,7 @@ class MainScreen(Screen):
 class TaskManager(MDApp):
     def build(self):
         self.theme_cls.theme_style = "Dark"
+        Builder.load_file("modules/to_do_list_base_classes/base.kv")
         Builder.load_file("./modules/menu/menu.kv")
         Builder.load_file("./modules/top_bar/top_bar.kv")
         Builder.load_file("./modules/goals/goals.kv")

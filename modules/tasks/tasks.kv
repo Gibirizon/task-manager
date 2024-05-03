@@ -4,53 +4,13 @@
 <Tasks>:
     name: "tasks"
 
-    ScrollView:
-        id: scroll
-        pos_hint: {"center_x":0.5, "top":1}
-        size_hint: .9,.75
-        MDList:
-            id: list_container
-
-    MDIconButton:
-        pos_hint: {"center_x":0.5, "center_y": 0.1}
-        icon: "plus-thick"
-        style: "filled"
-        on_release : root.open_dialog()
-
-<EditTaskField>:
-    id: edit_task_field
-    on_text_validate: self.list_item.change_task_name(self.text)
-    # focus: True
-    MDTextFieldHintText:
-        text: "Enter new task name"
-
 
 <ListItem>:
-    MDListItemHeadlineText:
-        id: list_headline_text
-        text: root.headline_text
     MDListItemSupportingText:
         text: root.supporting_text
-    MDListItemTrailingCheckbox:
-        id: list_checkbox
-        active: root.check
-        on_release: root.mark_task(self.active)
 
-<DialogContent>:
-    orientation: "vertical"
+<TasksDialogContent>:
     MDDivider:
-    MDTextField:
-        id: task_name_field
-        mode: "filled"
-        on_focus: if self.focus: root.task_options_dropdown_menu_open()
-        set_text: lambda instance, text: root.on_text_field_text()
-        MDTextFieldHintText:
-            text: "Enter task name"
-    # MDIconButton:
-    #     icon: "plus-thick"
-    #     style: "filled"
-    #     on_release: app.root.db.create_task_option(root.ids.task_name_field.text)
-
     MDListItem:
         theme_bg_color: "Custom"
         md_bg_color: app.theme_cls.transparentColor
@@ -68,16 +28,3 @@
         MDListItemSupportingText:
             text: f"Finish time for tasks: {root.finish_time}"
     MDDivider:
-
-<TaskOptionsListItem>:
-    MDListItem:
-        size_hint: 0.75, 1
-        on_release: root.dialog.choose_task_name(root.headline_text)
-        MDListItemHeadlineText:
-            text: root.headline_text
-    MDIconButton:
-        pos_hint: {"x":0.75}
-        size_hint: 0.25, 1
-        icon: "trash-can-outline"
-        style: "standard"
-        on_release: root.dialog.delete_task_from_options(root.headline_text)
