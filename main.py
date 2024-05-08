@@ -5,7 +5,9 @@ Config.set("graphics", "width", "540")
 Config.set("graphics", "height", "1000")
 
 from database.database import Database
+from kivy.core.text import LabelBase
 from kivy.lang.builder import Builder
+from kivy.metrics import dp
 from kivy.uix.screenmanager import Screen, ScreenManager
 from kivymd.app import MDApp
 
@@ -122,6 +124,28 @@ class TaskManager(MDApp):
         Builder.load_file("./modules/timer/timer.kv")
         Builder.load_file("./modules/weekly_tasks/weekly_tasks.kv")
         Builder.load_file("./modules/tasks/tasks.kv")
+        LabelBase.register(
+            name="lora",
+            fn_regular="fonts/Lora-BoldItalic.ttf",
+        )
+
+        self.theme_cls.font_styles["lora"] = {
+            "large": {
+                "line-height": 1.64,
+                "font-name": "lora",
+                "font-size": dp(60),
+            },
+            "medium": {
+                "line-height": 1.52,
+                "font-name": "lora",
+                "font-size": dp(46),
+            },
+            "small": {
+                "line-height": 1.44,
+                "font-name": "lora",
+                "font-size": dp(24),
+            },
+        }
         return MainScreen()
 
     def on_stop(self):

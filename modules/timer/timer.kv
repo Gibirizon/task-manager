@@ -3,5 +3,73 @@
 <Timer>:
     name: "timer"
     MDLabel:
-        halign:"center"
-        text: "Timer"
+        id: current_time_label
+        text: "25:00"
+        font_style: "lora"
+        role: "large"
+        halign: "center"
+        pos_hint: {"center_y": 0.7}
+
+    MDButton:
+        style: "filled"
+        theme_bg_color: "Custom"
+        md_bg_color: "#6200ee"
+        pos_hint: {"center_x": 0.5, "center_y": 0.60}
+        on_release: root.start_timer(root.start_stop_button_text)
+
+        MDButtonIcon:
+            icon: "clock-start"
+            theme_icon_color: "Custom"
+            icon_color: "white"
+
+        MDButtonText:
+            text: root.start_stop_button_text
+            font_style: "lora"
+            role: "small"
+            theme_text_color: "Custom"
+            text_color: "white"
+
+    MDButton:
+        style: "filled"
+        theme_bg_color: "Custom"
+        md_bg_color: "#6200ee"
+        pos_hint: {"center_x": 0.5, "center_y": 0.50}
+        on_release: root.restart_timer()
+
+        MDButtonIcon:
+            icon: "restart"
+            theme_icon_color: "Custom"
+            icon_color: "white"
+
+        MDButtonText:
+            text: "Restart"
+            font_style: "lora"
+            role: "small"
+            theme_text_color: "Custom"
+            text_color: "white"
+
+    MDLabel:
+        text: 'If you want to see current time on clock, click "refresh"'
+        font_style: "Title"
+        role: "medium"
+        halign: "center"
+        pos_hint: {"center_y": 0.4}
+
+    MDButton:
+        style: "filled"
+        theme_bg_color: "Custom"
+        md_bg_color: "#6200ee"
+        pos_hint: {"center_x": 0.5, "center_y": 0.3}
+        on_release: root.refresh_timer()
+
+        MDButtonIcon:
+            icon: "refresh"
+            theme_icon_color: "Custom"
+            icon_color: "white"
+
+        MDButtonText:
+            text: "Refresh"
+            font_style: "lora"
+            role: "small"
+            theme_text_color: "Custom"
+            text_color: "white"
