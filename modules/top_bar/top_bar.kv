@@ -31,50 +31,23 @@
         text: "Menu"
         pos_hint: {"center_x": 0.5}
 
-
-
-
-
 # scrollabale vertical navigation to display and manage different tabs
-<NavigationBar@ScrollView>:
+<NavigationBar>:
     pos_hint: {"x":0, "y":0}
     size_hint: None, .4
-    do_scroll_x: True
-    do_scroll_y: False
-    GridLayout:
-        rows: 1
-        # spacing: 10
-        size_hint_x: None
-        width: self.minimum_width
-        NavigationButton:
-            text: "Menu"
-            on_press: app.root.nav_button_click("menu", self.text)
-        NavigationButton:
-            text: "Daily Tasks"
-            on_press: app.root.nav_button_click("tasks", self.text)
-        NavigationButton:
-            text: "Daily Goals"
-            on_press: app.root.nav_button_click("goals", self.text)
-        NavigationButton:
-            text: "Timer"
-            on_press: app.root.nav_button_click("timer", self.text)
-        NavigationButton:
-            text: "Weekly Tasks"
-            on_press: app.root.nav_button_click("weekly_tasks", self.text)
-        NavigationButton:
-            text: "Notes"
-            on_press: app.root.nav_button_click("notes", self.text)
-        NavigationButton:
-            text: "Statistics"
-            on_press: app.root.nav_button_click("stats", self.text)
-        NavigationButton:
-            text: "Calendar"
-            on_press: app.root.nav_button_click("calendar", self.text)
 
-<NavigationButton@Button>:
-    background_normal: ""
-    background_color: "#181818"
-    min_state_time: 0.2
-    font_size: dp(13)
-    size_hint_x: None
-    width: dp(100)
+    MDTabsPrimary:
+        id: tabs
+        pos_hint: {"center_x": .5, "center_y": .5}
+        allow_stretch: False
+
+        MDDivider:
+
+<NavigationBarItem>:
+    on_release: app.root.nav_button_click(root.tab_name)
+    MDTabsItemIcon:
+        icon: root.tab_icon
+    MDTabsItemText:
+        text: app.root.ids.sm.screen_names_to_titles[root.tab_name]
+        font_style: "Label"
+        role: "small"

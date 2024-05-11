@@ -21,7 +21,6 @@ class MainScreenManager(ScreenManager):
         "goals": "Daily Goals",
         "timer": "Timer",
         "weekly_tasks": "Weekly Tasks",
-        "notes": "Notes",
         "stats": "Statistics",
         "calendar": "Calendar",
     }
@@ -89,11 +88,11 @@ class MainScreenManager(ScreenManager):
         return super().on_touch_up(touch)
 
     def go_back_to_previous_screen(self, *args):
-        print(self.previous_screen)
         if self.previous_screen:
-            self.change_screen(self.previous_screen[-1], False)
+            target_screen = self.previous_screen.pop()
+            self.change_screen(target_screen, False)
             self.parent.ids.nav.adjust_top_bar_title(
-                self.screen_names_to_titles[self.previous_screen.pop()]
+                self.screen_names_to_titles[target_screen]
             )
 
 
@@ -103,12 +102,14 @@ class MainScreen(Screen):
     def __init__(self, **kw):
         super().__init__(**kw)
 
-    def nav_button_click(self, screen_name, screen_title):
+    def nav_button_click(self, screen_name):
         # changing the current screen by calling method on screen manager
         self.ids.sm.change_screen(screen_name)
 
         # adjust top bar title to the current displayed screen
-        self.ids.nav.adjust_top_bar_title(screen_title)
+        self.ids.nav.adjust_top_bar_title(
+            self.ids.sm.screen_names_to_titles[screen_name]
+        )
 
 
 class TaskManager(MDApp):
@@ -147,6 +148,10 @@ class TaskManager(MDApp):
             },
         }
         return MainScreen()
+
+    def on_start(self):
+        self.root.ids.nav.ids.navigation_bar.create_tabs()
+        return super().on_start()
 
     def on_stop(self):
         # close connection to db
