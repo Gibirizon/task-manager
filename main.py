@@ -21,8 +21,6 @@ class MainScreenManager(ScreenManager):
         "goals": "Daily Goals",
         "timer": "Timer",
         "weekly_tasks": "Weekly Tasks",
-        "stats": "Statistics",
-        "calendar": "Calendar",
     }
 
     def __init__(self, **kwargs):
@@ -119,9 +117,6 @@ class TaskManager(MDApp):
         Builder.load_file("./modules/menu/menu.kv")
         Builder.load_file("./modules/top_bar/top_bar.kv")
         Builder.load_file("./modules/goals/goals.kv")
-        Builder.load_file("./modules/calendar/calendar.kv")
-        Builder.load_file("./modules/notes/notes.kv")
-        Builder.load_file("./modules/stats/stats.kv")
         Builder.load_file("./modules/timer/timer.kv")
         Builder.load_file("./modules/weekly_tasks/weekly_tasks.kv")
         Builder.load_file("./modules/tasks/tasks.kv")
