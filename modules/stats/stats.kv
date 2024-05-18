@@ -1,0 +1,78 @@
+#:kivy 2.3.0
+
+<Stats>:
+    name: "stats"
+    MDIcon:
+        icon: "information-outline"
+        pos_hint: {"center_x":.5, "center_y":.95}
+
+    MDLabel:
+        pos_hint: {"center_x":.5,"center_y": 0.9}
+        size_hint_x: 0.8
+        halign:"center"
+        text:
+            "Simple statistics for total days and consecutive days \
+            when all the tasks in the relevant tab have been completed"
+        font_style: "Title"
+        role: "medium"
+
+    MDLabel:
+        pos_hint: {"center_x":.5,"center_y": 0.75}
+        halign: "center"
+        text: "Choose tab for statistics:"
+        font_style: "Title"
+        role: "large"
+
+    MDButton:
+        id: btn
+        pos_hint: {"center_x": .5, "center_y": .65}
+        size_hint: None, None
+        size: dp(300), dp(70)
+        style: "filled"
+        theme_bg_color: "Custom"
+        md_bg_color: "#0000CD"
+        on_release: root.tabs_menu_open()
+
+        MDButtonIcon:
+            icon: "tab-search"
+            theme_icon_color: "Custom"
+            icon_color: "white"
+
+        MDButtonText:
+            text: "Daily tasks"
+            font_style: "Title"
+            role: "medium"
+            theme_text_color: "Custom"
+            text_color: "white"
+
+    GridLayout:
+        pos_hint: {"center_x":.5,"center_y": 0.4}
+        size_hint: 0.7, 0.3
+        cols: 2
+
+        MDLabel:
+            text: f"Total days completing all tasks: "
+            font_style: "Title"
+            role: "medium"
+            size_hint_x: 3
+
+        MDLabel:
+            text: f"[b]{root.total_days}[/b]"
+            markup: True
+            halign: "right"
+            font_style: "Title"
+            role: "medium"
+
+        MDLabel:
+            pos_hint: {"center_x":.5,"center_y": 0.45}
+            text: f"Consecutive days completing all tasks: "
+            font_style: "Title"
+            role: "medium"
+            size_hint_x: 3
+
+        MDLabel:
+            text: f"[b]{root.consecutive_days}[/b]"
+            markup: True
+            font_style: "Title"
+            role: "medium"
+            halign: "right"

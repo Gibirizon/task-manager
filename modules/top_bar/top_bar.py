@@ -35,7 +35,6 @@ class NavigationBar(Screen):
             "timer",
             "calendar-week",
             "chart-timeline-variant-shimmer",
-            "calendar",
         ]
         tabs_names = app.root.ids.sm.screen_names_to_titles
         tab_names_icons = zip(tabs_names, tabs_icons)

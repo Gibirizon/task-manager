@@ -10,11 +10,11 @@ class Database:
         delete_option,
         get_all_options,
     )
-    from database.tasks_table import (  
-        create_task,
-        create_tasks_table,
-        get_all_tasks,
+    from database.plan_realisation_table import (
+        create_or_change_item_realisation,
+        create_plan_realisation_table,
     )
+    from database.tasks_table import create_task, create_tasks_table, get_all_tasks
     from database.to_do_list_base import (
         create_item,
         create_to_do_list_table,
@@ -34,13 +34,12 @@ class Database:
         self.create_options_table("tasks_options")
         self.create_options_table("goals_options")
         self.create_options_table("weekly_tasks_options")
-        self.create_default_options("tasks_options", item=[("maths",), ("polish",)])
+        self.create_default_options("tasks_options", item=[("Python",), ("English",)])
+        self.create_default_options("goals_options", item=[("Focus on",)])
         self.create_default_options(
-            "goals_options", item=[("Speak english",), ("Focus",)]
+            "weekly_tasks_options", item=[("Maths test",), ("Python project",)]
         )
-        self.create_default_options(
-            "weekly_tasks_options", item=[("Maths Test",), ("Python mobile app",)]
-        )
+        self.create_plan_realisation_table()
 
     # close connection to database
     def close_connection(self):
