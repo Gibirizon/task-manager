@@ -1,6 +1,7 @@
 #:kivy 2.3.0
 
 <Timer>:
+    md_bg_color: "#1a1a2f"
     name: "timer"
     MDLabel:
         id: current_time_label
@@ -13,7 +14,7 @@
     MDButton:
         style: "filled"
         theme_bg_color: "Custom"
-        md_bg_color: "#6200ee"
+        md_bg_color: "#0a15e3"
         pos_hint: {"center_x": 0.5, "center_y": 0.60}
         on_release: root.start_timer(root.start_stop_button_text)
 
@@ -32,7 +33,7 @@
     MDButton:
         style: "filled"
         theme_bg_color: "Custom"
-        md_bg_color: "#6200ee"
+        md_bg_color: "#0a15e3"
         pos_hint: {"center_x": 0.5, "center_y": 0.50}
         on_release: root.restart_timer()
 
@@ -58,7 +59,7 @@
     MDButton:
         style: "filled"
         theme_bg_color: "Custom"
-        md_bg_color: "#6200ee"
+        md_bg_color: "#0a15e3"
         pos_hint: {"center_x": 0.5, "center_y": 0.3}
         on_release: root.refresh_timer()
 

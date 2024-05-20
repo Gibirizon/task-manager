@@ -148,6 +148,9 @@ class TaskManager(MDApp):
 
     def on_start(self):
         self.root.ids.nav.ids.navigation_bar.create_tabs()
+        self.root.ids.sm.get_screen("stats").calculate_statistics(
+            "Daily tasks", "tasks"
+        )
         return super().on_start()
 
     def on_stop(self):

@@ -2,6 +2,7 @@
 
 
 <ListScreen>:
+    md_bg_color: "#1a1a2f"
     ScrollView:
         id: scroll
         pos_hint: {"center_x":0.5, "top":0.95}
@@ -14,7 +15,7 @@
         icon: "plus-thick"
         style: "filled"
         theme_bg_color: "Custom"
-        md_bg_color: "#4169E1"
+        md_bg_color: "#0a15e3"
         theme_icon_color: "Custom"
         icon_color: "white"
         theme_font_size: "Custom"
@@ -32,6 +33,8 @@
 
 
 <ListItemBase>:
+    theme_bg_color: "Custom"
+    md_bg_color: "#404252"
     MDListItemHeadlineText:
         id: list_headline_text
         text: root.headline_text

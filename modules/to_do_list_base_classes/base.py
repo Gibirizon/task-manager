@@ -2,7 +2,6 @@ from datetime import datetime
 
 from kivy.metrics import dp
 from kivy.properties import ObjectProperty, StringProperty
-from kivy.uix.screenmanager import Screen
 from kivy.uix.widget import Widget
 from kivymd.app import MDApp
 from kivymd.uix.button import MDButton, MDButtonText
@@ -15,6 +14,7 @@ from kivymd.uix.dialog import (
 from kivymd.uix.list import MDListItem
 from kivymd.uix.menu import MDDropdownMenu
 from kivymd.uix.relativelayout import MDRelativeLayout
+from kivymd.uix.screen import MDScreen
 from kivymd.uix.textfield import MDTextField
 
 app = MDApp.get_running_app()
@@ -223,7 +223,7 @@ class ListItemBase(MDListItem):
         return super().on_touch_down(touch)
 
 
-class ListScreen(Screen):
+class ListScreen(MDScreen):
     dialog = None
 
     def __init__(self, table_name, **kw):

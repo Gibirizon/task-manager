@@ -1,12 +1,12 @@
 from kivy.properties import StringProperty
-from kivy.uix.screenmanager import Screen
 from kivymd.app import MDApp
 from kivymd.uix.menu import MDDropdownMenu
+from kivymd.uix.screen import MDScreen
 
 app = MDApp.get_running_app()
 
 
-class Stats(Screen):
+class Stats(MDScreen):
     total_days = StringProperty("0 d")
     consecutive_days = StringProperty("0 d")
 
@@ -23,7 +23,7 @@ class Stats(Screen):
             {
                 "text": element[2],
                 "leading_icon": element[0],
-                "leading_icon_color": "orange",
+                "leading_icon_color": "#4d89fb",
                 "on_release": lambda text=element[2], table_name=element[
                     1
                 ]: self.calculate_statistics(text, table_name),
@@ -31,10 +31,6 @@ class Stats(Screen):
             for element in menu_elements_info
         ]
         self.tabs_menu = MDDropdownMenu(caller=self.ids.btn, items=menu_items).open()
-
-    def on_pre_enter(self, *args):
-        self.calculate_statistics("Daily tasks", "tasks")
-        return super().on_pre_enter(*args)
 
     def calculate_statistics(self, text, table_name):
         # change button text
@@ -47,4 +43,8 @@ class Stats(Screen):
         completed = all([x[-1] for x in all_elements])
 
         # add information to a database
-        app.root.db.create_or_change_item_realisation(table_name, int(completed))
+        total, consecutive = app.root.db.create_or_change_item_realisation(
+            table_name, int(completed)
+        )
+        self.total_days = f"{total} d"
+        self.consecutive_days = f"{consecutive} d"

@@ -1,10 +1,10 @@
 from datetime import datetime, timedelta
 
 from kivy.properties import StringProperty
-from kivy.uix.screenmanager import Screen
+from kivymd.uix.screen import MDScreen
 
 
-class Timer(Screen):
+class Timer(MDScreen):
     # text on button: start/stop
     start_stop_button_text = StringProperty("Start")
 
