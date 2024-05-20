@@ -1,5 +1,7 @@
 #:kivy 2.3.0
+# Specify the version of Kivy being used
 
+# Import the necessary modules and classes from the respective files
 #:import Menu modules.menu.menu.Menu
 #:import Navigation modules.top_bar.top_bar.Navigation
 #:import Tasks modules.tasks.tasks.Tasks
@@ -8,23 +10,26 @@
 #:import Stats modules.stats.stats.Stats
 #:import WeeklyTasks modules.weekly_tasks.weekly_tasks.WeeklyTasks
 
-# Screen for my app
+# Define the root widget for the app's main screen
 MainScreen:
 
 <MainScreen>:
+    # Navigation bar widget at the top
     Navigation:
         id: nav
-        pos_hint: {"x":0, "y":0.86}
-        size_hint: 1, 0.15
+        pos_hint: {"x": 0, "y": 0.86}  # Position the navigation bar at the top
+        size_hint: 1, 0.15  # Size of the navigation bar (15% of the screen height, full width)
 
-    # Main Screen Manager for my mobile app
+    # Main Screen Manager for handling different screens in the app
     MainScreenManager:
         id: sm
-        pos_hint: {"x":0, "y":0}
-        size_hint: 1, 0.86
-        Menu:
-        Tasks:
-        Goals:
-        Timer:
-        WeeklyTasks:
-        Stats:
+        pos_hint: {"x": 0, "y": 0}  # Position the screen manager below the navigation bar
+        size_hint: 1, 0.86  # Size of the screen manager (86% of the screen height, full width)
+
+        # Define each screen managed by the MainScreenManager
+        Menu:  # Menu screen
+        Tasks:  # Daily Tasks screen
+        Goals:  # Daily Goals screen
+        Timer:  # Timer screen
+        WeeklyTasks:  # Weekly Tasks screen
+        Stats:  # Statistics screen
