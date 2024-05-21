@@ -1,30 +1,36 @@
 #:kivy 2.3.0
 
-
 <Tasks>:
-    name: "tasks"
-
+    name: "tasks"  # Identifier name for the Tasks screen
 
 <ListItem>:
+    # Define how the list item should display supporting text
     MDListItemSupportingText:
         text: root.supporting_text
 
 <TasksDialogContent>:
+    # Divider to separate content visually
     MDDivider:
+
+    # List item for setting the start time
     MDListItem:
         theme_bg_color: "Custom"
         md_bg_color: app.theme_cls.transparentColor
-        on_release: root.show_time_picker("Start", root.start_time)
+        on_release: root.show_time_picker("Start", root.start_time)  # Open time picker on click
         MDListItemLeadingIcon:
-            icon: "clock"
+            icon: "clock"  # Leading icon for start time
         MDListItemSupportingText:
-            text: f"Start time for tasks: {root.start_time}"
+            text: f"Start time for tasks: {root.start_time}"  # Display current start time
+
+    # List item for setting the finish time
     MDListItem:
         theme_bg_color: "Custom"
         md_bg_color: app.theme_cls.transparentColor
-        on_release: root.show_time_picker("Finish", root.finish_time)
+        on_release: root.show_time_picker("Finish", root.finish_time)  # Open time picker on click
         MDListItemLeadingIcon:
-            icon: "clock"
+            icon: "clock"  # Leading icon for finish time
         MDListItemSupportingText:
-            text: f"Finish time for tasks: {root.finish_time}"
+            text: f"Finish time for tasks: {root.finish_time}"  # Display current finish time
+
+    # Divider to separate content visually
     MDDivider:

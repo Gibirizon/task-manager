@@ -14,7 +14,6 @@ from kivymd.app import MDApp
 
 # Custom ScreenManager to handle screen transitions and navigation logic
 class MainScreenManager(ScreenManager):
-    touch_down_x = 0  # x-coordinate of the touch down event
     previous_screen = []  # stack to keep track of previous screens for back navigation
     screen_names_to_titles = {  # mapping screen names to titles for the top bar
         "menu": "Menu",

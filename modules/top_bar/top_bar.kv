@@ -1,5 +1,6 @@
 #:kivy 2.3.0
 
+# Navigation screen layout containing the top bar and the navigation bar
 <Navigation>:
     font_size: dp(10)
     TopBar:
@@ -9,27 +10,28 @@
         id: navigation_bar
         width: root.width
 
-# top app bar to show active tab name and implement some information about the app
+# Top app bar to show active tab name
 <TopBar>:
     pos_hint: {"x":0, "y": .4}
     size_hint: 1, .6
     type: "small"
     theme_bg_color: "Custom"
-    md_bg_color: "#101561"
+    md_bg_color: "#101561"  # Dark blue background color for the top bar
 
+    # Container for leading buttons in the top app bar
     MDTopAppBarLeadingButtonContainer:
         spacing: dp(25)
         MDActionTopAppBarButton:
             icon: "arrow-left"
-            on_release: app.root.ids.sm.go_back_to_previous_screen()
+            on_release: app.root.ids.sm.go_back_to_previous_screen()  # Action to go back to the previous screen
 
-
+    # Title in the top app bar
     MDTopAppBarTitle:
         id: top_bar_title
-        text: "Menu"
-        pos_hint: {"center_x": 0.5}
+        text: "Menu"  # Default title text
+        pos_hint: {"center_x": 0.5}  # Center the title horizontally
 
-# scrollabale vertical navigation to display and manage different tabs
+# Scrollable vertical navigation bar to display and manage different tabs
 <NavigationBar>:
     pos_hint: {"x":0, "y":0}
     size_hint: None, .4
@@ -37,16 +39,16 @@
     MDTabsPrimary:
         id: tabs
         pos_hint: {"center_x": .5, "center_y": .5}
-        allow_stretch: False
-
+        allow_stretch: False  # Do not allow tabs to stretch
         MDDivider:
 
+# Definition of a single tab item in the navigation bar
 <NavigationBarItem>:
-    md_bg_color: "#090a27"
-    on_release: app.root.nav_button_click(root.tab_name)
+    md_bg_color: "#090a27"  # Dark background color for the tab item
+    on_release: app.root.nav_button_click(root.tab_name)  # Action when the tab item is clicked
     MDTabsItemIcon:
-        icon: root.tab_icon
+        icon: root.tab_icon  # Icon for the tab item
     MDTabsItemText:
-        text: app.root.ids.sm.screen_names_to_titles[root.tab_name]
+        text: app.root.ids.sm.screen_names_to_titles[root.tab_name]  # Text for the tab item based on screen name
         font_style: "Label"
         role: "small"

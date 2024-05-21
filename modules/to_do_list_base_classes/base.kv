@@ -1,18 +1,17 @@
 #:kivy 2.3.0
 
-
 <ListScreen>:
     md_bg_color: "#1a1a2f"
     ScrollView:
         id: scroll
-        pos_hint: {"center_x":0.5, "top":0.95}
-        size_hint: .9,.75
+        pos_hint: {"center_x": 0.5, "top": 0.95}
+        size_hint: .9, .75  # ScrollView to contain the list of items
         MDList:
-            id: list_container
+            id: list_container  # Container for list items
 
     MDIconButton:
-        pos_hint: {"center_x":0.5, "center_y": 0.1}
-        icon: "plus-thick"
+        pos_hint: {"center_x": 0.5, "center_y": 0.1}
+        icon: "plus-thick"  # Button to add a new item
         style: "filled"
         theme_bg_color: "Custom"
         md_bg_color: "#0a15e3"
@@ -20,37 +19,35 @@
         icon_color: "white"
         theme_font_size: "Custom"
         font_size: "32dp"
-        radius: [self.height / 2, ]
         size_hint: None, None
-        size: "48dp", "48dp"
-        on_release : root.open_dialog()
+        size: "48dp", "48dp"  # Size of the button
+        on_release: root.open_dialog()  # Open dialog to add new item
 
 <EditField>:
     id: edit_field
-    on_text_validate: self.list_item.change_task_name(self.text)
+    on_text_validate: self.list_item.change_task_name(self.text)  # Change task name on enter key press
     MDTextFieldHintText:
         text: "Enter new task name"
-
 
 <ListItemBase>:
     theme_bg_color: "Custom"
     md_bg_color: "#404252"
     MDListItemHeadlineText:
         id: list_headline_text
-        text: root.headline_text
+        text: root.headline_text  # Display the headline text of the list item
     MDListItemTrailingCheckbox:
         id: list_checkbox
-        active: root.check
-        on_release: root.mark(self.active)
+        active: root.check  # Checkbox to mark task as completed
+        on_release: root.mark(self.active)  # Mark task as completed/unfinished
 
 <BaseDialogContent>:
     orientation: "vertical"
     MDDivider:
     MDTextField:
         id: name_field
-        mode: "filled"
-        on_focus: if self.focus: root.options_dropdown_menu_open()
-        set_text: lambda instance, text: root.on_text_field_text()
+        mode: "filled"  # Text field for entering the task name
+        on_focus: if self.focus: root.options_dropdown_menu_open()  # Open dropdown menu on focus
+        set_text: lambda instance, text: root.on_text_field_text()  # Update options based on text
         MDTextFieldHintText:
             text: "Enter name"
     MDDivider:
@@ -58,12 +55,12 @@
 <OptionsListItem>:
     MDListItem:
         size_hint: 0.75, 1
-        on_release: root.dialog.choose_name(root.headline_text)
+        on_release: root.dialog.choose_name(root.headline_text)  # Select option on release
         MDListItemHeadlineText:
             text: root.headline_text
     MDIconButton:
-        pos_hint: {"x":0.75}
+        pos_hint: {"x": 0.75}
         size_hint: 0.25, 1
-        icon: "trash-can-outline"
+        icon: "trash-can-outline"  # Button to delete the option
         style: "standard"
         on_release: root.dialog.delete_from_options(root.headline_text)

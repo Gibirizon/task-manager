@@ -2,10 +2,10 @@
 
 <Timer>:
     md_bg_color: "#1a1a2f"
-    name: "timer"
+    name: "timer"  # Screen name for navigation
     MDLabel:
         id: current_time_label
-        text: "25:00"
+        text: "25:00"  # Initial timer value
         font_style: "lora"
         role: "large"
         halign: "center"
@@ -15,8 +15,8 @@
         style: "filled"
         theme_bg_color: "Custom"
         md_bg_color: "#0a15e3"
-        pos_hint: {"center_x": 0.5, "center_y": 0.60}
-        on_release: root.start_timer(root.start_stop_button_text)
+        pos_hint: {"center_x": 0.5, "center_y": 0.60}  # Position the button below the timer label
+        on_release: root.start_timer(root.start_stop_button_text)  # Start or stop the timer when pressed
 
         MDButtonIcon:
             icon: "clock-start"
@@ -24,7 +24,7 @@
             icon_color: "white"
 
         MDButtonText:
-            text: root.start_stop_button_text
+            text: root.start_stop_button_text  # Text for the start/stop button ("Start" or "Stop")
             font_style: "lora"
             role: "small"
             theme_text_color: "Custom"
@@ -35,7 +35,7 @@
         theme_bg_color: "Custom"
         md_bg_color: "#0a15e3"
         pos_hint: {"center_x": 0.5, "center_y": 0.50}
-        on_release: root.restart_timer()
+        on_release: root.restart_timer()  # Restart the timer when pressed
 
         MDButtonIcon:
             icon: "restart"
@@ -54,14 +54,14 @@
         font_style: "Title"
         role: "medium"
         halign: "center"
-        pos_hint: {"center_y": 0.4}
+        pos_hint: {"center_y": 0.4}  # Position the instruction label below the buttons
 
     MDButton:
         style: "filled"
         theme_bg_color: "Custom"
         md_bg_color: "#0a15e3"
         pos_hint: {"center_x": 0.5, "center_y": 0.3}
-        on_release: root.refresh_timer()
+        on_release: root.refresh_timer()  # Refresh the timer when pressed
 
         MDButtonIcon:
             icon: "refresh"

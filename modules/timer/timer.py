@@ -5,10 +5,10 @@ from kivymd.uix.screen import MDScreen
 
 
 class Timer(MDScreen):
-    # text on button: start/stop
+    # Text on the start/stop button: "Start" or "Stop"
     start_stop_button_text = StringProperty("Start")
 
-    # variable to check has timer started
+    # Variable to check if the timer has started
     started_timer = None
 
     def __init__(self, **kw):
@@ -16,57 +16,65 @@ class Timer(MDScreen):
         super().__init__(**kw)
 
     def start_timer(self, text):
+        # If the button text is "Start", initialize the timer
         if text == "Start":
-            # save current time
+            # Save the current time as the start time
             self.started_timer = datetime.now()
+
+            # Parse the current time label to get the initial minutes and seconds
             self.label_time = timedelta(
                 minutes=int(self.ids.current_time_label.text[:2]),
                 seconds=int(self.ids.current_time_label.text[3:]),
             )
 
-            # change button text
+            # Change button text to "Stop"
             self.start_stop_button_text = "Stop"
 
+        # If the button text is "Stop", stop the timer
         else:
             self.stop_timer()
 
     def stop_timer(self):
-        # first refresh the timer
+        # First refresh the timer to update the current time label
         self.refresh_timer()
 
-        # stop timer
+        # Stop the timer by resetting the start time
         self.started_timer = None
 
-        # change button text
+        # Change button text back to "Start"
         self.start_stop_button_text = "Start"
 
     def restart_timer(self):
-        # change button text
+        # Change button text back to "Start"
         self.start_stop_button_text = "Start"
 
-        # stop timer
+        # Stop the timer by resetting the start time
         self.started_timer = None
 
-        # back to 25 minutes
+        # Reset the timer label back to the default 25:00
         self.ids.current_time_label.text = "25:00"
 
-    # timer will only refresh after this method, so that you can leave this app working in background  and then come back to it and refresh
+    # Refresh the timer to update the current time label based on elapsed time
     def refresh_timer(self):
-        # compare current time with self.started_time_at
+        # Compare the current time with the saved start time
         if self.started_timer:
             stopped_timer = datetime.now()
             passed_time = stopped_timer - self.started_timer
+
+            # Calculate the new remaining time
             if self.label_time > passed_time:
                 new_time = self.label_time - passed_time
             else:
                 new_time = passed_time - self.label_time
+
+            # Convert the new time to minutes and seconds
             new_mins, new_secs = divmod(new_time.seconds, 60)
             label_timeformat = "{:02d}:{:02d}".format(new_mins, new_secs)
 
-            # new text
+            # Update the current time label with the new formatted time
             self.ids.current_time_label.text = label_timeformat
 
-            # minus as first character if passed time > 25 min
+            # Add a minus sign if the elapsed time exceeds the initial timer value (25 minutes)
             if passed_time > self.label_time:
                 self.ids.current_time_label.text = (
                     "-" + self.ids.current_time_label.text

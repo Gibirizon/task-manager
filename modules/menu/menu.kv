@@ -1,21 +1,20 @@
 #:kivy 2.3.0
 
-# :import BackgroundLabel modules.additional_classes.additional_classes.BackgroundLabel
-
 <Menu>:
     name: "menu"
     size_hint_y: 0.98
+
+    # Background image for the menu with a semi-transparent overlay
     FitImage:
         canvas:
             Color:
-                rgba: 0, 0, 0, .4
+                rgba: 0, 0, 0, .4  # Semi-transparent overlay color
             Rectangle:
-                size: root.size
-                pos: root.pos
-        source: "images/start_menu_bg.jpg"
+                size: root.size  # Cover the entire menu
+                pos: root.pos  # Position to cover the entire menu
+        source: "images/start_menu_bg.jpg"  # Background image source
 
-
-    # main content - title label
+    # Main content of the menu - contains the title label
     MainStartContent:
 
 <MainStartContent@MDBoxLayout>:
