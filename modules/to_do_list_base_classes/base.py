@@ -83,9 +83,9 @@ class BaseDialogContent(MDDialogContentContainer):
         self.ids.name_field.focus = True
 
     def add_new_option(self, name):
-        # Add a new option to the database and refresh options
-        app.root.db.create_option(self.table_name, name)
-        self.on_text_field_text()
+        # Add a new option to the database and refresh options if this option doesn't already exist
+        if app.root.db.create_option(self.table_name, name):
+            self.on_text_field_text()
         self.ids.name_field.focus = True
 
     def delete_from_options(self, task):

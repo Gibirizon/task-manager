@@ -9,34 +9,35 @@ def create_options_table(self, table_name):
     self.con.commit()
 
 
-# add default task options to table
+# Add multiple default task options to a specified table
+# 'item' should be a list of tuples, where each tuple contains a single item string
 def create_default_options(self, table, item):
-    try:
-        self.cur.executemany(
-            f"INSERT INTO {table}(item) VALUES(?)",
-            item,
-        )
-        self.con.commit()
-    except IntegrityError as err:
-        print(f"An Error! {err}")
+    self.cur.executemany(
+        f"INSERT INTO {table}(item) VALUES(?)",
+        item,
+    )
+    self.con.commit()
 
 
-# add item option to table
+# Add a single task option to a specified table
+# Returns 1 if the item was added successfully, or 0 if there was an IntegrityError (e.g., item already exists)
 def create_option(self, table, item):
-    # checking if this option already exists
+    # Try to insert the item into the table, handling the case where the item already exists
     try:
         self.cur.execute(f"INSERT INTO {table}(item) VALUES(?)", (item,))
         self.con.commit()
+        return 1
     except IntegrityError as err:
-        print(f"An Error! {err}")
+        return 0
 
 
-# deleting item function (after press on trash bin)
+# Delete a specific item from the specified table
 def delete_option(self, table, item):
     self.cur.execute(f"DELETE FROM {table} WHERE item=?", (item,))
     self.con.commit()
 
 
-# get all the options when launching app
+# Retrieve all task options from the specified table
+# Returns a list of tuples, where each tuple contains a single item string
 def get_all_options(self, table):
-    return self.cur.execute(f"SELECT item FROM {table} ORDER by item").fetchall()
+    return self.cur.execute(f"SELECT item FROM {table} ORDER BY item").fetchall()

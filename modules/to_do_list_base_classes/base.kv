@@ -45,7 +45,7 @@
     MDDivider:
     MDTextField:
         id: name_field
-        mode: "filled"  # Text field for entering the task name
+        mode: "filled"
         on_focus: if self.focus: root.options_dropdown_menu_open()  # Open dropdown menu on focus
         set_text: lambda instance, text: root.on_text_field_text()  # Update options based on text
         MDTextFieldHintText:
