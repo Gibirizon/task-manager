@@ -27,41 +27,31 @@
     MDLabel:
         pos_hint: {"center_x": .5, "center_y": 0.65}
         halign: "center"
-        text: "Choose tab for statistics:"
+        text: "Choose category for statistics:"
         font_style: "Title"
         role: "large"
 
-    # Button to open the dropdown menu for selecting statistics category
-    MDButton:
-        id: btn
-        pos_hint: {"center_x": .5, "center_y": .55}
-        size_hint: None, None
-        size: dp(300), dp(70)
-        style: "filled"
-        theme_bg_color: "Custom"
-        md_bg_color: "#0a15e3"
-        on_release: root.tabs_menu_open()  # Open the dropdown menu when button is pressed
+    BoxLayout:
+        pos_hint: {"center_x": .5, "center_y": 0.5}
+        size_hint: 0.75, 0.15
 
-        MDButtonIcon:
-            icon: "tab-search"
-            theme_icon_color: "Custom"
-            icon_color: "white"
+        MDTabsPrimary:
+            size_hint_x: .9
+            id: categories
+            theme_bg_color: "Custom"
+            md_bg_color:  "#090a27"
 
-        MDButtonText:
-            id: btn_text
-            font_style: "Title"
-            role: "medium"
-            theme_text_color: "Custom"
-            text_color: "white"
+            MDDivider:
+
 
     # GridLayout for displaying statistics (total and consecutive days)
     GridLayout:
-        pos_hint: {"center_x": .5, "center_y": 0.3}
-        size_hint: 0.7, 0.3
+        pos_hint: {"center_x": .5, "center_y":0.25}
+        size_hint: .75, .3
         cols: 2
 
         MediumLabel:
-            text: f"Total days completing all tasks: "
+            text: f"Total days completing all {root.category}: "
             size_hint_x: 3
 
         # Label for displaying total days value
@@ -71,7 +61,7 @@
             halign: "right"
 
         MediumLabel:
-            text: f"Consecutive days completing all tasks: "
+            text: f"Consecutive days completing all {root.category}: "
             size_hint_x: 3
 
         # Label for displaying consecutive days value

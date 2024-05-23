@@ -162,10 +162,9 @@ class TaskManager(MDApp):
         # Initialize the navigation bar and create tabs
         self.root.ids.nav.ids.navigation_bar.create_tabs()
 
-        # Calculate initial statistics for the "stats" screen
-        self.root.ids.sm.get_screen("stats").calculate_statistics(
-            "Daily tasks", "tasks"
-        )
+        # Initialize categories for statistics
+        self.root.ids.sm.get_screen("stats").create_categories()
+
         return super().on_start()
 
     def on_stop(self):

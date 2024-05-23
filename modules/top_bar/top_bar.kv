@@ -23,7 +23,7 @@
         spacing: dp(25)
         MDActionTopAppBarButton:
             icon: "arrow-left"
-            on_release: app.root.ids.sm.go_back_to_previous_screen()  # Action to go back to the previous screen
+            on_release: app.root.ids.sm.go_back_to_previous_screen()
 
     # Title in the top app bar
     MDTopAppBarTitle:
@@ -49,6 +49,6 @@
     MDTabsItemIcon:
         icon: root.tab_icon  # Icon for the tab item
     MDTabsItemText:
-        text: app.root.ids.sm.screen_names_to_titles[root.tab_name]  # Text for the tab item based on screen name
+        text: app.root.ids.sm.screen_names_to_titles[root.tab_name]
         font_style: "Label"
         role: "small"
