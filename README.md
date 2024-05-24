@@ -1,13 +1,13 @@
 # Task Manager
 
-Task Manager is a mobile application developed using Python with Kivy and KivyMD. The user-friendly interface and smooth performance make it a handy tool for daily task management.
+Task Manager is a mobile application developed using _Python_ with _Kivy_ and _KivyMD_. The user-friendly interface and smooth performance make it a handy tool for daily task management.
 
 ## Screenshots
 
-![Home Screen](screenshots/home_screen.jpg)
-![Task List](screenshots/task_list.jpg)
-![Task Creation](screenshots/task_creation.jpg)
-![Statistics](screenshots/statistics.jpg)
+![Home Screen](screenshots/home_screen.png)
+![Task List](screenshots/task_list.png)
+![Task Creation](screenshots/task_creation.png)
+![Statistics](screenshots/statistics.png)
 
 ## Features
 
@@ -49,9 +49,9 @@ To run the 'Task Manager' on your local machine, follow these steps:
 
 ### Option 2: On mobile phone
 
-'Task Manager' is available for Android.
+`Task Manager` is available for Android.
 
-Download the 'task_manager.apk' from '~/bin/' folder. Connect your phone to computer and just copy it and install on phone. That's the easiest way to get started with 'Task Manager'.
+Download the `task_manager.apk` from `~/bin/` folder. Connect your phone to computer and just copy it and install on phone. That's the easiest way to get started with `Task Manager`.
 
 APK was tested on POCO X3 Pro.
 
@@ -59,10 +59,10 @@ APK was tested on POCO X3 Pro.
 
 Once the application is running, you can:
 
-- **Add a Task**: Click on the "+" icon on appropriate screen and fill in the task details.
+- **Add a Task**: Click on the `+` icon on appropriate screen and fill in the task details.
 - **View Tasks**: Navigate through your tasks on three screens.
 - **Edit or Delete Tasks**: Long press on a task to edit or delete it.
-- **Use timer**: Navigate to Timer tab and click "start" button to start timer in the background.
+- **Use timer**: Navigate to Timer tab and click `start` button to start timer in the background.
 - **Look at your progress**: Navigate to Statistics tab and watch your progress.
 
 ## Used Framework
