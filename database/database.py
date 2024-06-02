@@ -12,8 +12,12 @@ class Database:
         get_all_options,
     )
     from database.plan_realisation_table import (
-        create_or_change_item_realisation,
+        calculate_consecutive_days,
+        create_element,
         create_plan_realisation_table,
+        get_number_of_completed_days,
+        get_today_element,
+        update_element,
     )
     from database.tasks_table import create_task, create_tasks_table, get_all_tasks
     from database.to_do_list_base import (

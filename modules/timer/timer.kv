@@ -16,7 +16,8 @@
         theme_bg_color: "Custom"
         md_bg_color: "#0a15e3"
         pos_hint: {"center_x": 0.5, "center_y": 0.60}  # Position the button below the timer label
-        on_release: root.start_timer(root.start_stop_button_text)  # Start or stop the timer when pressed
+        # on_release: root.start_timer(root.start_stop_button_text)  # Start or stop the timer when pressed
+        on_release: root.stop_timer() if root.time_store.get("timer")["timer_is_running"] else root.start_timer()
 
         MDButtonIcon:
             icon: "clock-start"
@@ -24,7 +25,8 @@
             icon_color: "white"
 
         MDButtonText:
-            text: root.start_stop_button_text  # Text for the start/stop button ("Start" or "Stop")
+            # text: root.start_stop_button_text  # Text for the start/stop button ("Start" or "Stop")
+            text: "Stop" if root.timer_is_running else "Start"
             font_style: "lora"
             role: "small"
             theme_text_color: "Custom"

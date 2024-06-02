@@ -120,7 +120,7 @@ class MainScreen(Screen):
 # Main application class
 class TaskManager(MDApp):
     def build(self):
-        self.theme_cls.theme_style = "Dark"  # Set the theme to dark mode
+        self.theme_cls.theme_style = "Dark"
 
         # Load the kv files for different modules
         Builder.load_file("modules/to_do_list_base_classes/base.kv")
@@ -168,9 +168,21 @@ class TaskManager(MDApp):
         return super().on_start()
 
     def on_stop(self):
+        # Update statistics after making changes in daily tasks and goals
+        self.root.ids.sm.get_screen("stats").calculate_statistics("tasks")
+        self.root.ids.sm.get_screen("stats").calculate_statistics("goals")
+
         # Close the database connection when the app stops
         self.root.db.close_connection()
+
         return super().on_stop()
+
+    def on_pause(self):
+        # Update statistics after making changes in daily tasks and goals
+        self.root.ids.sm.get_screen("stats").calculate_statistics("tasks")
+        self.root.ids.sm.get_screen("stats").calculate_statistics("goals")
+
+        return super().on_pause()
 
 
 # Entry point of the application
